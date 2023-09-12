@@ -1,44 +1,19 @@
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
+
 class CalculatorModel {
-    fun performOperation(operationString: String): String {
-        var result = ""
-        try {
-            val prefix = if (operationString.startsWith("-")) "-" else ""
-            val expression = operationString.removePrefix("-")
-            when {
-                expression.contains("-") -> {
-                    val splitExpression = expression.split("-")
-                    val numA = splitExpression[0].toDouble()
-                    val numB = splitExpression[1].toDouble()
-                    result = (numA - numB).toString()
-                }
-                expression.contains("+") -> {
-                    val splitExpression = expression.split("+")
-                    val numA = splitExpression[0].toDouble()
-                    val numB = splitExpression[1].toDouble()
-                    result = (numA + numB).toString()
-                }
-                expression.contains("*") -> {
-                    val splitExpression = expression.split("*")
-                    val numA = splitExpression[0].toDouble()
-                    val numB = splitExpression[1].toDouble()
-                    result = (numA * numB).toString()
-                }
-                expression.contains("/") -> {
-                    val splitExpression = expression.split("/")
-                    val numA = splitExpression[0].toDouble()
-                    val numB = splitExpression[1].toDouble()
-                    if (numB != 0.0) {
-                        result = (numA / numB).toString()
-                    } else {
-                        result = "Error"
-                    }
-                }
-            }
-        } catch (e: ArithmeticException) {
-            e.printStackTrace()
-            result = "Error"
+    fun performOperation(string: String): String {
+
+        val engine: ScriptEngine = ScriptEngineManager().getEngineByName("rhino")
+
+        val result = engine.eval(string)
+
+        if (result.toString() =="Infinity" || result.toString() == "-Infinity")
+        {
+            return "Error"
         }
-        return result
+
+        return result.toString()
     }
 
     fun removeTrailingZeros(result: String): String {
@@ -49,7 +24,5 @@ class CalculatorModel {
         return value
     }
 
-    fun isOperatorAdded(value: String): Boolean {
-        return value.startsWith("-") || value.contains("/") || value.contains("*") || value.contains("+") || value.contains("-")
-    }
+
 }

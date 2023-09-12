@@ -6,5 +6,7 @@ interface CalculatorView
     fun clearText()
     fun getCurrentText():String
     fun displayResult(result:String)
+    fun backSpace()
+    fun clearZero()
 
 }

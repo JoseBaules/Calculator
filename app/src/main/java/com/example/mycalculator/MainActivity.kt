@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity(), CalculatorView
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         textResult = findViewById(R.id.textResult)
+        textResult?.text ="0"
+
 
     }
 
@@ -33,9 +35,21 @@ class MainActivity : AppCompatActivity(), CalculatorView
     }
 
     override fun clearText() {
-        textResult?.text = ""
+        textResult?.text = "0"
     }
 
+    override fun clearZero()
+    {
+        textResult?.text =""
+    }
+
+    override fun backSpace() {
+        if (textResult?.text.toString().isNotEmpty())
+            textResult?.text = textResult?.text.toString().substring(0,textResult?.text.toString().length-1)
+        if (textResult?.text.toString().isEmpty())
+            clearText()
+
+    }
     override fun getCurrentText(): String {
 
         return textResult?.text.toString()
@@ -53,6 +67,10 @@ class MainActivity : AppCompatActivity(), CalculatorView
 
     fun onClear(view: View) {
         calculatorPresenter.onClearClicked()
+    }
+    fun onBack (view: View)
+    {
+        calculatorPresenter.onBackSpaceClicked()
     }
 
     fun onDecimal(view: View) {
