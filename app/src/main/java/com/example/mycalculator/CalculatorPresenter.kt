@@ -4,22 +4,40 @@ import CalculatorModel
 
 class CalculatorPresenter(private val model: CalculatorModel, private val view: CalculatorView) {
 
-    private var lastNumeric = false
+    private var lastNumeric = true
     private var lastDot = false
     private var oneDot = false
+    private var minus = false
 
+    //
     fun onDigitClicked(text: String) {
-        view.appendText(text)
-        lastNumeric = true
-        lastDot = false
+        if (view.getCurrentText() =="0")
+        {
+            view.clearZero()
+            view.appendText(text)
+            lastNumeric = true
+
+        }
+        else{
+            view.appendText(text)
+            lastNumeric = true
+            lastDot = false
+        }
     }
 
     fun onClearClicked() {
         view.clearText()
+        lastNumeric = true
     }
 
+    fun onBackSpaceClicked()
+    {
+        view.backSpace()
+        lastNumeric = true
+
+    }
     fun onDecimalClicked() {
-        if (lastNumeric && !lastDot && !oneDot) {
+        if (lastNumeric && !lastDot) {
             view.appendText(".")
             lastNumeric = false
             lastDot = true
@@ -28,11 +46,13 @@ class CalculatorPresenter(private val model: CalculatorModel, private val view: 
     }
 
     fun onOperatorClicked(text: String) {
-        val currentText = view.getCurrentText()
-        if (lastNumeric && !model.isOperatorAdded(currentText)) {
+
+        if (lastNumeric)
+        {
             view.appendText(text)
             lastNumeric = false
             lastDot = false
+
         }
     }
 
