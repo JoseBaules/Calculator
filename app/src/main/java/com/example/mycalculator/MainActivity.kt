@@ -12,7 +12,9 @@ import java.lang.ArithmeticException
 class MainActivity : AppCompatActivity(), CalculatorView
 {
     private var textResult: TextView? = null
+
     private val calculatorModel = CalculatorModel()
+
     private val calculatorPresenter = CalculatorPresenter(calculatorModel,this)
 
 
