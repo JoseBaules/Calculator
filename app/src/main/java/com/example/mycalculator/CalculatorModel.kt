@@ -10,8 +10,8 @@ class CalculatorModel {
 
         var result = engine.eval(string)
 
-        if (result.toString() =="Infinity" || result.toString() == "-Infinity" || result.toString() =="NaN")
-        {
+
+        if (result.toString() =="Infinity" || result.toString() == "-Infinity" || result.toString() =="NaN")        {
             return "Error"
         }
 
@@ -39,4 +39,5 @@ class CalculatorModel {
         }
         return value
     }
+
 }
