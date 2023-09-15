@@ -25,6 +25,7 @@ class CalculatorPresenter(private val model: CalculatorModel, private val view: 
         }
     }
 
+
     fun onClearClicked() {
         view.clearText()
         lastNumeric = true
